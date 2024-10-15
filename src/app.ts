@@ -14,10 +14,7 @@ app.options('*', cors())
 app.use(cors({ origin: true, credentials: true }))
 app.use(cookieParser())
 
-// app.use('/api/v1', router)
-app.get('/api/v1/test', (req, res) => {
-  throw new Error.CastError('Invalid Id', 400, 'Cast Error')
-})
+app.use('/api/v1', router)
 
 app.use(globalErrorHandler)
 app.use((req: Request, res: Response, next: NextFunction) => {
