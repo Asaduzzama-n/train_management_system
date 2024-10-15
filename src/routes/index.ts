@@ -2,6 +2,10 @@ import express from 'express'
 
 const router = express.Router()
 
-const routes = [{}]
+const routes = [
+  {
+    path: 'test',
+  },
+]
 
 export default router

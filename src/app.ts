@@ -1,5 +1,30 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from 'express'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
+import router from './routes'
+import httpStatus from 'http-status'
+import globalErrorHandler from './app/middleware/globalErrorHandler'
+import { Error } from 'mongoose'
 
-const app: Application = express();
+const app: Application = express()
 
-export default app;
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.options('*', cors())
+app.use(cors({ origin: true, credentials: true }))
+app.use(cookieParser())
+
+// app.use('/api/v1', router)
+app.get('/api/v1/test', (req, res) => {
+  throw new Error.CastError('Invalid Id', 400, 'Cast Error')
+})
+
+app.use(globalErrorHandler)
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.status(httpStatus.NOT_FOUND).json({
+    success: false,
+    message: 'Requested URL not found.',
+  })
+})
+
+export default app
