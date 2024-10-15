@@ -9,7 +9,7 @@
     "lint:fix": "eslint . --fix",
     "prettier:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "prettier:fix": "prettier --write .",
-    "lint-prettier": "yarn lint:check && yarn prettier:check",
+    "lint-prettier": "npm lint:check && npm prettier:check",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky"
   },
@@ -27,11 +27,13 @@
   "dependencies": {
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
+    "@types/eslint-config-prettier": "^6.11.3",
     "@types/express": "^5.0.0",
     "@types/lint-staged": "^13.3.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "eslint-config-prettier": "^9.1.0",
     "express": "^4.21.1",
     "http-status": "^1.7.4",
     "husky": "^9.1.6",
