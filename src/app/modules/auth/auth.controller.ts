@@ -11,7 +11,7 @@ const createUser = catchAsync(async (req, res) => {
   const result = await AuthService.createUser(userData)
 
   sendResponse<IUser>(res, {
-    statusCode: 200,
+    statusCode: httpStatus.OK,
     success: true,
     message: 'User created successfully!',
     data: result,
@@ -32,7 +32,7 @@ const userLogin = catchAsync(async (req, res) => {
   res.cookie('refreshToken', refreshToken, cookieOptions)
 
   sendResponse<IUserLoginResponse>(res, {
-    statusCode: 200,
+    statusCode: httpStatus.OK,
     success: true,
     message: 'User logged in successfully!',
     data: others,

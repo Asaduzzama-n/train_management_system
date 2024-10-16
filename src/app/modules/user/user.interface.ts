@@ -31,3 +31,10 @@ export interface IUserMethods {
 }
 
 export type UserModel = Model<IUser, Record<string, unknown>, IUserMethods>
+
+export interface IUserFilters {
+  searchTerm?: string
+  email?: string
+  firstName?: string
+  lastName?: string
+}
