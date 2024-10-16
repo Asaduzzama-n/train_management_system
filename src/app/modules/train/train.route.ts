@@ -15,6 +15,8 @@ router.patch(
   validateRequest(TrainValidation.updateTrainZodSchema),
   TrainController.updateTrain,
 )
+router.patch('/add-stops/:id', TrainController.addStopsToTrain)
+
 router.delete('/:id', TrainController.deleteTrain)
 router.get('/:id', TrainController.getSingleTrain)
 router.get('/', TrainController.getAllTrain)

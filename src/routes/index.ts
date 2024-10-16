@@ -3,6 +3,8 @@ import { AuthRoutes } from '../app/modules/auth/auth.route'
 import { StationRoutes } from '../app/modules/station/stations.route'
 import { TrainRoutes } from '../app/modules/train/train.route'
 import { StopRoutes } from '../app/modules/stops/stops.route'
+import { walletRoutes } from '../app/modules/wallet/wallet.route'
+import { TransactionRoutes } from '../app/modules/transaction/transaction.route'
 
 const router = express.Router()
 
@@ -22,6 +24,14 @@ const routes = [
   {
     path: '/stop',
     route: StopRoutes,
+  },
+  {
+    path: '/wallet',
+    route: walletRoutes,
+  },
+  {
+    path: '/transaction',
+    route: TransactionRoutes,
   },
 ]
 

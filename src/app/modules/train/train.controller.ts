@@ -51,6 +51,19 @@ const updateTrain = catchAsync(async (req, res) => {
   })
 })
 
+const addStopsToTrain = catchAsync(async (req, res) => {
+  const { id } = req.params
+  const { stopsId } = req.body
+  const result = await TrainService.addStopsToTrain(id, stopsId)
+
+  sendResponse<ITrain>(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Train updated successfully!',
+    data: result,
+  })
+})
+
 const deleteTrain = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await TrainService.deleteTrain(id)
@@ -69,4 +82,5 @@ export const TrainController = {
   getSingleTrain,
   updateTrain,
   deleteTrain,
+  addStopsToTrain,
 }
