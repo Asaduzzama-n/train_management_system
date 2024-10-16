@@ -8,6 +8,7 @@ export const stationSchema = new Schema<
 >(
   {
     name: { type: String, required: true },
+    stationCode: { type: String, required: true, unique: true },
     location: { type: String, required: true },
     description: { type: String, required: true },
   },
