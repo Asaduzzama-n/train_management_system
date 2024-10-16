@@ -12,7 +12,11 @@ const createTrain = async (payload: ITrain): Promise<ITrain | null> => {
 }
 
 const getAllTrain = async (): Promise<ITrain[] | null> => {
-  const train = await Train.find()
+  const train = await Train.find().populate({
+    path: 'stops',
+    populate: { path: 'stationId', select: 'name stationCode' },
+    select: 'departureTime arrivalTime',
+  })
   if (!train)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to retrieved trains.')
 
@@ -20,7 +24,11 @@ const getAllTrain = async (): Promise<ITrain[] | null> => {
 }
 
 const getSingleTrain = async (id: string): Promise<ITrain | null> => {
-  const train = await Train.findOne({ _id: id })
+  const train = await Train.findOne({ _id: id }).populate({
+    path: 'stops',
+    populate: { path: 'stationId', select: 'name stationCode' },
+    select: 'departureTime arrivalTime',
+  })
   if (!train)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to retrieved train.')
 
@@ -39,6 +47,30 @@ const updateTrain = async (
   return updatedTrain
 }
 
+const addStopsToTrain = async (
+  id: string,
+  stopIds: string[],
+): Promise<ITrain | null> => {
+  if (!Array.isArray(stopIds) || stopIds.length === 0) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'Stop IDs must be a non-empty array.',
+    )
+  }
+
+  const updatedTrain = await Train.findOneAndUpdate(
+    { _id: id },
+    { $addToSet: { stops: { $each: stopIds } } }, // Add stops using $addToSet to avoid duplicates
+    { new: true }, // Return the updated document
+  )
+
+  if (!updatedTrain) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to add stops to train.')
+  }
+
+  return updatedTrain
+}
+
 const deleteTrain = async (id: string): Promise<ITrain | null> => {
   const deletedTrain = await Train.findOneAndDelete({ _id: id })
   if (!deletedTrain)
@@ -53,4 +85,5 @@ export const TrainService = {
   getSingleTrain,
   updateTrain,
   deleteTrain,
+  addStopsToTrain,
 }
