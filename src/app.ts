@@ -1,10 +1,9 @@
 import express, { Application, NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import router from './routes'
+import router from './app/routes'
 import httpStatus from 'http-status'
 import globalErrorHandler from './app/middleware/globalErrorHandler'
-import { Error } from 'mongoose'
 
 const app: Application = express()
 
@@ -17,6 +16,7 @@ app.use(cookieParser())
 app.use('/api/v1', router)
 
 app.use(globalErrorHandler)
+
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.NOT_FOUND).json({
     success: false,

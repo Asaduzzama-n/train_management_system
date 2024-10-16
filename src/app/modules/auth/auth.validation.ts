@@ -22,7 +22,6 @@ const createUserZodSchema = z.object({
     dateOfBirth: z.string().optional(),
     avatar: z.string().optional(),
     role: UserRole,
-    isSubscribe: z.string().optional(),
   }),
 })
 

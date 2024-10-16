@@ -1,0 +1,60 @@
+import httpStatus from 'http-status'
+import catchAsync from '../../../shared/catchAsync'
+import sendResponse from '../../../shared/sendResponse'
+import { TicketService } from './ticket.service'
+
+const createTicket = catchAsync(async (req, res) => {
+  const { ...ticketData } = req.body
+
+  const result = await TicketService.createTicket(ticketData)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Ticket created successfully!',
+    data: result,
+  })
+})
+
+const getSingleTicket = catchAsync(async (req, res) => {
+  const { id } = req.params
+  const result = await TicketService.getSingleTicket(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Ticket retrieved successfully!',
+    data: result,
+  })
+})
+
+const getAllTicket = catchAsync(async (req, res) => {
+  const result = await TicketService.getAllTicket()
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Tickets retrieved successfully!',
+    data: result,
+  })
+})
+
+const updateTicket = catchAsync(async (req, res) => {
+  const { id } = req.params
+  const { ...updatedData } = req.body
+  const result = await TicketService.updateTicket(id, updatedData)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Ticket updated successfully!',
+    data: result,
+  })
+})
+
+export const TicketController = {
+  createTicket,
+  getSingleTicket,
+  getAllTicket,
+  updateTicket,
+}
