@@ -6,9 +6,9 @@ import { TicketController } from './ticket.controller'
 const router = express.Router()
 
 router.post(
-  '/',
-  validateRequest(TicketValidation.createTicketZodSchema),
-  TicketController.createTicket,
+  '/purchase',
+  validateRequest(TicketValidation.purchaseTicketZodSchema),
+  TicketController.purchaseTicket,
 )
 router.get('/:id', TicketController.getSingleTicket)
 router.patch(

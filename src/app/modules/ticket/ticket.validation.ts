@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const createTicketZodSchema = z.object({
+const purchaseTicketZodSchema = z.object({
   body: z.object({
     trainId: z.string({ required_error: 'Train ID is required' }),
     fare: z.number().min(0, 'Fare must be a positive number').optional(),
@@ -21,6 +21,6 @@ const updateTicketZodSchema = z.object({
 })
 
 export const TicketValidation = {
-  createTicketZodSchema,
+  purchaseTicketZodSchema,
   updateTicketZodSchema,
 }

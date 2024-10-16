@@ -6,8 +6,9 @@ import { Train } from '../train/train.model'
 import mongoose from 'mongoose'
 import { checkTicketAvailability } from './utils'
 import { Wallet } from '../wallet/wallet.model'
+import { Transaction } from '../transaction/transaction.model'
 
-const createTicket = async (payload: ITicket): Promise<ITicket | null> => {
+const purchaseTicket = async (payload: ITicket): Promise<ITicket | null> => {
   const { trainId, journeyDate, userId } = payload
 
   const train = await Train.findById(payload.trainId).lean()
@@ -43,6 +44,15 @@ const createTicket = async (payload: ITicket): Promise<ITicket | null> => {
       ...payload,
       fare,
       walletId: wallet?._id,
+    })
+
+    await Transaction.create({
+      amount: fare,
+      walletId: wallet?._id,
+      userId,
+      transactionType: 'ticket',
+      transactionDate: Date.now(),
+      ticketId: result?._id,
     })
 
     await session.commitTransaction()
@@ -82,7 +92,7 @@ const updateTicket = async (
 }
 
 export const TicketService = {
-  createTicket,
+  purchaseTicket,
   getSingleTicket,
   getAllTicket,
   updateTicket,

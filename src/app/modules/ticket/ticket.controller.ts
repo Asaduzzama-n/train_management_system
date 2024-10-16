@@ -3,10 +3,10 @@ import catchAsync from '../../../shared/catchAsync'
 import sendResponse from '../../../shared/sendResponse'
 import { TicketService } from './ticket.service'
 
-const createTicket = catchAsync(async (req, res) => {
+const purchaseTicket = catchAsync(async (req, res) => {
   const { ...ticketData } = req.body
 
-  const result = await TicketService.createTicket(ticketData)
+  const result = await TicketService.purchaseTicket(ticketData)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -53,7 +53,7 @@ const updateTicket = catchAsync(async (req, res) => {
 })
 
 export const TicketController = {
-  createTicket,
+  purchaseTicket,
   getSingleTicket,
   getAllTicket,
   updateTicket,
