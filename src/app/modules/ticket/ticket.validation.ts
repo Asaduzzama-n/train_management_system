@@ -5,7 +5,6 @@ const purchaseTicketZodSchema = z.object({
     trainId: z.string({ required_error: 'Train ID is required' }),
     fare: z.number().min(0, 'Fare must be a positive number').optional(),
     journeyDate: z.string({ required_error: 'Journey date is required' }),
-    userId: z.string({ required_error: 'User ID is required' }),
   }),
 })
 

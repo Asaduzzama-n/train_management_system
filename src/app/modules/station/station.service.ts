@@ -22,7 +22,7 @@ const getAllStation = async (): Promise<IStation[] | null> => {
 const getSingleStation = async (id: string): Promise<IStation | null> => {
   const station = await Station.findOne({ _id: id })
   if (!station)
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to retrieved station.')
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Station does not exist.')
 
   return station
 }

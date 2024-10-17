@@ -4,14 +4,21 @@ import sendResponse from '../../../shared/sendResponse'
 import { TicketService } from './ticket.service'
 
 const purchaseTicket = catchAsync(async (req, res) => {
+  const { id } = req?.user!
+
   const { ...ticketData } = req.body
 
-  const result = await TicketService.purchaseTicket(ticketData)
+  const updatedDepositData = {
+    ...ticketData,
+    userId: id,
+  }
+
+  const result = await TicketService.purchaseTicket(updatedDepositData)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Ticket created successfully!',
+    message: 'Ticket purchased successfully!',
     data: result,
   })
 })
