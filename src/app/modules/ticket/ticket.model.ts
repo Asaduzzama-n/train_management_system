@@ -8,6 +8,16 @@ export const TicketSchema = new Schema<ITicket, Record<string, unknown>>(
     journeyDate: { type: Date, required: true },
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     purchaseDate: { type: Date, required: true, default: Date.now() },
+    startStationId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Station',
+      required: true,
+    },
+    endStationId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Station',
+      required: true,
+    },
     status: {
       type: String,
       enum: ['active', 'cancelled'],

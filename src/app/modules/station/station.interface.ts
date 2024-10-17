@@ -3,7 +3,10 @@ import { Model } from 'mongoose'
 export type IStation = {
   name: string
   stationCode: string
-  location: string
+  location: {
+    latitude: string
+    longitude: string
+  }
   description: string
 }
 
