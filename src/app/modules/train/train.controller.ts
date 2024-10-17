@@ -3,6 +3,7 @@ import catchAsync from '../../../shared/catchAsync'
 import sendResponse from '../../../shared/sendResponse'
 import { ITrain } from './train.interface'
 import { TrainService } from './train.service'
+import { ITrainSchedule } from './schedule/schedule.interface'
 
 const createTrain = catchAsync(async (req, res) => {
   const { ...trainData } = req.body
@@ -23,6 +24,29 @@ const getAllTrain = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Trains retrieved successfully!',
+    data: result,
+  })
+})
+
+const getAllSchedules = catchAsync(async (req, res) => {
+  const result = await TrainService.getAllSchedules()
+
+  sendResponse<ITrainSchedule[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Schedules retrieved successfully!',
+    data: result,
+  })
+})
+
+const getSchedulesByTrainId = catchAsync(async (req, res) => {
+  const { id } = req.params
+  const result = await TrainService.getSchedulesByTrainId(id)
+
+  sendResponse<ITrainSchedule[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Schedules retrieved successfully!',
     data: result,
   })
 })
@@ -84,4 +108,6 @@ export const TrainController = {
   updateTrain,
   deleteTrain,
   addStopsToTrain,
+  getAllSchedules,
+  getSchedulesByTrainId,
 }

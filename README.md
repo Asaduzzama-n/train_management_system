@@ -22,6 +22,7 @@ Wallet
 Ticket
 How to Run
 License
+Middleware for Authentication and Authorization for API
 ```
 
 # Project Overview
@@ -57,6 +58,8 @@ JWT_REFRESH_EXPIRES_IN=7d
 ```
 
 > Ensure you have a valid DATABASE_URL for connecting to your database.
+
+**Middleware for Authentication and Authorization for API**
 
 > Ensure to add Authorization header with Access Token.
 

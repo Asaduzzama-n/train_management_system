@@ -2,6 +2,8 @@ import httpStatus from 'http-status'
 import ApiError from '../../../errors/ApiError'
 import { ITrain } from './train.interface'
 import { Train } from './train.model'
+import { Schedule } from './schedule/schedule.model'
+import { ITrainSchedule } from './schedule/schedule.interface'
 
 const createTrain = async (payload: ITrain): Promise<ITrain | null> => {
   const train = await Train.create(payload)
@@ -12,15 +14,41 @@ const createTrain = async (payload: ITrain): Promise<ITrain | null> => {
 }
 
 const getAllTrain = async (): Promise<ITrain[] | null> => {
-  const train = await Train.find().populate({
+  const trains = await Train.find().populate({
     path: 'stops',
     populate: { path: 'stationId', select: 'name stationCode' },
     select: 'departureTime arrivalTime',
   })
-  if (!train)
+  if (!trains)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to retrieved trains.')
 
-  return train
+  return trains
+}
+
+const getAllSchedules = async (): Promise<ITrainSchedule[] | null> => {
+  const schedules = await Schedule.find().populate({
+    path: 'stops trainId',
+    populate: { path: 'stationId trainId', select: 'name stationCode' },
+    select: 'departureTime arrivalTime',
+  })
+  if (!schedules)
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to retrieved trains.')
+
+  return schedules
+}
+
+const getSchedulesByTrainId = async (
+  trainId: string,
+): Promise<ITrainSchedule[] | null> => {
+  const schedules = await Schedule.find({ trainId }).populate({
+    path: 'stops trainId',
+    populate: { path: 'stationId trainId', select: 'name stationCode' },
+    select: 'departureTime arrivalTime',
+  })
+  if (!schedules)
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to retrieved trains.')
+
+  return schedules
 }
 
 const getSingleTrain = async (id: string): Promise<ITrain | null> => {
@@ -85,5 +113,7 @@ export const TrainService = {
   getSingleTrain,
   updateTrain,
   deleteTrain,
+  getAllSchedules,
+  getSchedulesByTrainId,
   addStopsToTrain,
 }
