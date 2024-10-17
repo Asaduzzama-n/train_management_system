@@ -4,16 +4,39 @@ import ApiError from '../../../errors/ApiError'
 import httpStatus from 'http-status'
 import { Train } from '../train/train.model'
 import mongoose from 'mongoose'
-import { checkTicketAvailability } from './utils'
+import { calculateDistance, checkTicketAvailability } from './utils'
 import { Wallet } from '../wallet/wallet.model'
 import { Transaction } from '../transaction/transaction.model'
+import { Station } from '../station/station.model'
 
 const purchaseTicket = async (payload: ITicket): Promise<ITicket | null> => {
-  const { trainId, journeyDate, userId } = payload
+  const { trainId, journeyDate, userId, startStationId, endStationId } = payload
 
   const train = await Train.findById(payload.trainId).lean()
   if (!train)
     throw new ApiError(httpStatus.BAD_REQUEST, 'Train data does not exists!')
+
+  const startStation = await Station.findById(startStationId, {
+    location: 1,
+  }).lean()
+  const endStation = await Station.findById(endStationId, {
+    location: 1,
+  }).lean()
+
+  if (!startStation || !endStation) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Station data does not exist!')
+  }
+
+  // Extract lat and long from stations
+  const { latitude: startLat, longitude: startLon } = startStation.location
+  const { latitude: endLat, longitude: endLon } = endStation.location
+
+  if (!startLat || !startLon || !endLat || !endLon) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid station coordinates')
+  }
+
+  // Calculate the distance between the two stations
+  const distance = calculateDistance(startLat, startLon, endLat, endLon)
 
   const session = await mongoose.startSession()
 
@@ -31,8 +54,9 @@ const purchaseTicket = async (payload: ITicket): Promise<ITicket | null> => {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Ticket not available')
     }
 
-    const fare = 100
-
+    const pricePerKm = 3
+    const fare = Math.round(distance * pricePerKm)
+    console.log(distance)
     const wallet = await Wallet.findOne({ userId })
     if (!wallet || wallet.balance < fare) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Insufficient wallet balance')

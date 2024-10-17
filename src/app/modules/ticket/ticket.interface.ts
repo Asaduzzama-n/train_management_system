@@ -6,6 +6,8 @@ export type ITicket = {
   fare?: number
   purchaseDate: Date
   status: 'active' | 'cancelled'
+  startStationId: Types.ObjectId
+  endStationId: Types.ObjectId
   journeyDate: Date
 }
 
