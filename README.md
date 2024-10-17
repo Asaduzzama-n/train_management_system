@@ -8,6 +8,7 @@ This is the documentation for the Train Management System Backend API, which all
 
 ## Table of Contents
 
+```javascript
 Project Overview
 Installation
 Environment Setup
@@ -21,6 +22,7 @@ Wallet
 Ticket
 How to Run
 License
+```
 
 # Project Overview
 
@@ -40,9 +42,10 @@ The Train Management System Backend API provides a RESTful interface to manage u
 
 ## Environment Setup
 
-Create a .env file in the root of your project and add the following variables:
+**Create a .env file in the root of your project and add the following variables:**
 
-`NODE_ENV=development
+```javascript
+NODE_ENV=development
 PORT=5000
 DATABASE_URL=<your-database-url>
 
@@ -51,7 +54,7 @@ JWT_SECRET=<your-jwt-secret>
 JWT_EXPIRES_IN=1d
 JWT_REFRESH_SECRET=<your-jwt-refresh-secret>
 JWT_REFRESH_EXPIRES_IN=7d
-`
+```
 
 > Ensure you have a valid DATABASE_URL for connecting to your database.
 
