@@ -1,28 +1,26 @@
-## Train Management System Backend API Documentation
+# Train Management System Backend API Documentation
 
 This is the documentation for the Train Management System Backend API, which allows you to manage users, trains, stations, and train stops.
 
-# Postman Documentation
+## Postman Documentation
 
-[You can find detailed documentation for the API endpoints and usage in the Postman collection:](https://documenter.getpostman.com/view/27802886/2sAXxV6qGk)
+[You can find detailed documentation for the API endpoints and usage in the Postman collection](https://documenter.getpostman.com/view/27802886/2sAXxV6qGk)
 
-# Table of Contents
+## Table of Contents
 
-    Project Overview
-    Installation
-    Environment Setup
-
-# API Endpoints
-
-    Auth
-    User
-    Station
-    Train
-    Stops
-    Wallet
-    Ticket
-    How to Run
-    License
+Project Overview
+Installation
+Environment Setup
+API Endpoints
+Auth
+User
+Station
+Train
+Stops
+Wallet
+Ticket
+How to Run
+License
 
 # Project Overview
 
@@ -30,21 +28,21 @@ The Train Management System Backend API provides a RESTful interface to manage u
 
 # Installation
 
-Clone the repository:
+**Clone the repository:**
 
-git clone git@github.com:Asaduzzama-n/train_management_system.git
+`git clone git@github.com:Asaduzzama-n/train_management_system.git`
 
-cd train_management_system
+> cd train_management_system
 
-# Install dependencies:
+## Install dependencies:
 
     npm install
 
-# Environment Setup
+## Environment Setup
 
 Create a .env file in the root of your project and add the following variables:
 
-NODE_ENV=development
+`NODE_ENV=development
 PORT=5000
 DATABASE_URL=<your-database-url>
 
@@ -53,13 +51,15 @@ JWT_SECRET=<your-jwt-secret>
 JWT_EXPIRES_IN=1d
 JWT_REFRESH_SECRET=<your-jwt-refresh-secret>
 JWT_REFRESH_EXPIRES_IN=7d
+`
 
-Ensure you have a valid DATABASE_URL for connecting to your database.
+> Ensure you have a valid DATABASE_URL for connecting to your database.
 
-Ensure to add Authorization header with Access Token.
+> Ensure to add Authorization header with Access Token.
 
-# API Endpoints
+## API Endpoints
 
+```javascript
 Auth
 Create User - POST /api/v1/auth/signup
 Login - POST /api/v1/auth/login
@@ -96,15 +96,17 @@ Create Stop - POST /api/v1/stop
 Get Single Stop - GET /api/v1/stop/:id
 Update Stop - PATCH /api/v1/stop/:id
 Delete Stop - DELETE /api/v1/stop/:id
+```
 
 # How to Run
 
-Ensure your .env file is set up properly.
+> Ensure your .env file is set up properly.
+
 Start the server:
 
-npm start
+`npm start`
 
-The API will be available at http://localhost:5000/.
+**The API will be available at http://localhost:5000/.**
 
 # License
 
